@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Riya ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Deep Magical Gradient Background */
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Premium Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .glass-panel:hover {
+            box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.4);
+            transform: translateY(-5px);
+        }
+
+        /* Magical Text Glow */
+        .glow-text-pink {
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.6), 0 0 20px rgba(255, 105, 180, 0.4), 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+        
+        .glow-text-gold {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Page Transitions */
+        @keyframes popFadeIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .page-transition {
+            animation: popFadeIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transform: scale(0.95) !important;
+            transition: all 0.5s ease;
+        }
+
+        /* Inputs */
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            border-color: rgba(255, 105, 180, 0.8) !important;
+        }
+
+        /* --- NEW ANIMATIONS --- */
+        
+        /* 1. Floating Hearts */
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; transform: scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+        .heart-icon {
+            position: absolute;
+            color: #ff69b4; /* Hot pink */
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.5));
+        }
+
+        /* 2. Twinkling Sparkles */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px #fff; }
+        }
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle 2s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        /* 3. Bouncing Gift / Cake Icon */
+        @keyframes bounceGift {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        .animate-bounce-gift {
+            animation: bounceGift 2s infinite;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 4. Pulsing Text on Bday Page */
+        @keyframes pulseGlow {
+            0% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 105, 180, 0.6); }
+            50% { transform: scale(1.02); text-shadow: 0 0 25px rgba(255, 105, 180, 0.9); }
+            100% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 105, 180, 0.6); }
+        }
+        .pulse-text {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+        
+        #mainContent {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white flex items-center justify-center">
+
+    <!-- Audio Elements -->
+    <audio id="countdownAudio" src="countdown-song.mp3" loop preload="auto"></audio>
+    <audio id="bdayAudio" src="bday-song.mp3" loop preload="auto"></audio>
+
+    <!-- Animation Containers (Background) -->
+    <div id="sparkleContainer" class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"></div>
+    <div id="heartContainer" class="hidden absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"></div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent" class="w-full flex justify-center px-4">
+        
+        <!-- 1. LOGIN PAGE -->
+        <div id="loginPage" class="glass-panel p-8 rounded-3xl w-full max-w-sm flex flex-col gap-5 page-transition">
+            <div class="text-center">
+                <span class="text-4xl">✨</span>
+                <h2 class="text-3xl font-bold mt-2 tracking-wider text-pink-300 glow-text-pink">Login</h2>
+            </div>
+            
+            <div class="space-y-4 mt-2">
+                <input type="text" id="userId" placeholder="User ID" class="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 transition-all uppercase placeholder:text-white/50 text-white tracking-widest text-center">
+                <input type="password" id="password" placeholder="Password" class="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 transition-all placeholder:text-white/50 text-white tracking-widest text-center">
+            </div>
+
+            <p id="errorMsg" class="text-red-400 text-sm text-center hidden font-medium">Galat credentials! Phir se try karo 😅</p>
+            
+            <button onclick="handleLogin()" class="mt-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 font-bold py-4 rounded-xl shadow-lg transition-all transform hover:scale-105 active:scale-95 tracking-wide text-lg border border-white/10">
+                Unlock Surprise 🔓
+            </button>
+        </div>
+
+        <!-- 2. COUNTDOWN PAGE -->
+        <div id="countdownPage" class="hidden glass-panel p-10 rounded-3xl text-center page-transition w-full max-w-lg">
+            <h2 class="text-3xl font-light mb-10 text-pink-200">Waiting for the special day...</h2>
+            <div class="flex gap-4 sm:gap-6 justify-center text-center">
+                <div class="flex flex-col"><span id="days" class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-pink-300 to-purple-400">00</span><span class="text-xs sm:text-sm text-white/70 uppercase mt-3 tracking-widest">Days</span></div>
+                <div class="text-4xl sm:text-5xl font-light text-white/30 pt-1">:</div>
+                <div class="flex flex-col"><span id="hours" class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-pink-300 to-purple-400">00</span><span class="text-xs sm:text-sm text-white/70 uppercase mt-3 tracking-widest">Hours</span></div>
+                <div class="text-4xl sm:text-5xl font-light text-white/30 pt-1">:</div>
+                <div class="flex flex-col"><span id="mins" class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-pink-300 to-purple-400">00</span><span class="text-xs sm:text-sm text-white/70 uppercase mt-3 tracking-widest">Mins</span></div>
+                <div class="text-4xl sm:text-5xl font-light text-white/30 pt-1">:</div>
+                <div class="flex flex-col"><span id="secs" class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-pink-300 to-purple-400">00</span><span class="text-xs sm:text-sm text-white/70 uppercase mt-3 tracking-widest">Secs</span></div>
+            </div>
+            <div class="mt-10">
+                <span class="animate-pulse inline-block text-2xl">⏳</span>
+            </div>
+        </div>
+
+        <!-- 3. HAPPY BIRTHDAY PAGE -->
+        <div id="birthdayPage" class="hidden glass-panel p-10 sm:p-14 rounded-3xl max-w-2xl text-center page-transition relative overflow-hidden">
+            <!-- Decorative corner elements -->
+            <div class="absolute top-0 left-0 p-4 text-3xl opacity-50">✨</div>
+            <div class="absolute top-0 right-0 p-4 text-3xl opacity-50">✨</div>
+            <div class="absolute bottom-0 left-0 p-4 text-3xl opacity-50">🌸</div>
+            <div class="absolute bottom-0 right-0 p-4 text-3xl opacity-50">🌸</div>
+
+            <div class="animate-bounce-gift">🎂</div>
+            
+            <h1 class="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-300 to-yellow-200 mb-4 pulse-text tracking-tight">
+                Happy Birthday
+                    Riya!
+            </h1>
+            
+            <h3 class="text-xl sm:text-2xl text-purple-300 font-medium italic mb-10 glow-text-pink">
+                ~ From Harsh ❤️
+            </h3>
+            
+            <div class="bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
+                <p class="text-lg sm:text-xl leading-relaxed text-slate-100 font-light text-center">
+                    "On your special day, I just wanted to remind you how incredibly amazing you are. You bring so much light, energy, and joy into every moment. May this year bring you as much happiness as you bring to everyone around you. Keep that gorgeous smile on your face always, keep shining, and let's make this year the best one yet! ✨"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURATION
+        const VALID_ID = "RIYASINGH"; 
+        const VALID_PASS = "HARSH";
+        
+        // 4th September 2026 (Use this for final)
+        const TARGET_DATE = new Date("July 19, 2026 01:05:00").getTime();
+        
+        // TEST KARNE KE LIYE YAHAN COMMENT HATA DENA (10 second ka timer)
+        // const TARGET_DATE = new Date().getTime() + 10000; 
+
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const countdownPage = document.getElementById('countdownPage');
+        const birthdayPage = document.getElementById('birthdayPage');
+        const errorMsg = document.getElementById('errorMsg');
+        
+        const sparkleContainer = document.getElementById('sparkleContainer');
+        const heartContainer = document.getElementById('heartContainer');
+        
+        const countdownAudio = document.getElementById('countdownAudio');
+        const bdayAudio = document.getElementById('bdayAudio');
+
+        let timerInterval;
+
+        // --- BACKGROUND ANIMATION LOGIC --- //
+
+        // Create Background Sparkles (runs immediately)
+        function createSparkles() {
+            for(let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}vw`;
+                sparkle.style.top = `${Math.random() * 100}vh`;
+                sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+
+        // Create Floating Hearts (triggered on bday page)
+        function createHearts() {
+            const hearts = ['❤️', '💖', '💗', '💓', '✨', '🌸'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-icon');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animation = `floatHeart ${5 + Math.random() * 5}s linear forwards`;
+                
+                // Cleanup heart after animation
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
+                
+                heartContainer.appendChild(heart);
+            }, 300); // New heart every 300ms
+        }
+
+        // --- MAIN LOGIC --- //
+
+        function handleLogin() {
+            const id = document.getElementById('userId').value.trim().toUpperCase();
+            const pass = document.getElementById('password').value.trim();
+
+            if (id === VALID_ID && pass === VALID_PASS) {
+                loginPage.classList.add('fade-out');
+                setTimeout(() => {
+                    loginPage.classList.add('hidden');
+                    loginPage.classList.remove('fade-out');
+                    checkTimeAndStart();
+                }, 500); 
+            } else {
+                errorMsg.classList.remove('hidden');
+                // Shake effect on error
+                loginPage.style.transform = 'translateX(-10px)';
+                setTimeout(() => loginPage.style.transform = 'translateX(10px)', 100);
+                setTimeout(() => loginPage.style.transform = 'translateX(0)', 200);
+            }
+        }
+
+        function triggerConfetti() {
+            var duration = 8 * 1000; // Increased to 8 seconds
+            var end = Date.now() + duration;
+
+            (function frame() {
+                // Left side
+                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff69b4', '#ff1493', '#ffc0cb', '#ffd700', '#ffffff'] });
+                // Right side
+                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff69b4', '#ff1493', '#ffc0cb', '#ffd700', '#ffffff'] });
+                
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        function showBirthdayScreen() {
+            if(!countdownPage.classList.contains('hidden')) {
+                countdownPage.classList.add('fade-out');
+                countdownAudio.pause();
+                countdownAudio.currentTime = 0; 
+                setTimeout(() => {
+                    countdownPage.classList.add('hidden');
+                    countdownPage.classList.remove('fade-out');
+                    finalReveal();
+                }, 500); 
+            } else {
+                finalReveal();
+            }
+        }
+
+        function finalReveal() {
+            birthdayPage.classList.remove('hidden');
+            
+            // Start the girly animations
+            heartContainer.classList.remove('hidden');
+            createHearts();
+            triggerConfetti();
+            
+            // Play birthday song
+            bdayAudio.play().catch(e => console.log("Audio play blocked by browser."));
+        }
+
+        function checkTimeAndStart() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE - now;
+
+            if (distance <= 0) {
+                // Date reached
+                showBirthdayScreen();
+            } else {
+                // Show countdown
+                countdownPage.classList.remove('hidden');
+                countdownAudio.play().catch(e => console.log("Audio play blocked by browser."));
+                
+                timerInterval = setInterval(() => {
+                    const currentTime = new Date().getTime();
+                    const timeleft = TARGET_DATE - currentTime;
+
+                    if (timeleft <= 0) {
+                        clearInterval(timerInterval);
+                        showBirthdayScreen();
+                    } else {
+                        const d = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                        const h = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const m = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                        const s = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+                        document.getElementById('days').innerText = d.toString().padStart(2, '0');
+                        document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+                        document.getElementById('mins').innerText = m.toString().padStart(2, '0');
+                        document.getElementById('secs').innerText = s.toString().padStart(2, '0');
+                    }
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
